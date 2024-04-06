@@ -1,58 +1,71 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PhysicsModule;
 
 public class Playermovement : MonoBehaviour
 {
-    private CharacterController controller;
-    private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private float playerSpeed = 2.0f;
-    private float jumpHeight = 1.0f;
-    private float gravityValue = -9.81f;
 
     [SerializeField]
-    private RigidBody playerBody;
+    private float playerSpeed = 500.0f;
+
+    [SerializeField]
+    private float jumpForce = 1.5f;
+
+    [SerializeField]
+    private Rigidbody playerBody;
 
     private Vector3 playerMovementInput;
+
+    public float groundOffset = 3f;
+
+    [SerializeField]
+    Transform footPosition;
+
+    [SerializeField]
+    bool isGrounded;
+
+    LayerMask mask;
+
+    int playerLayer = 8;
+
+    bool OnGround()
+    {
+        //RaycastHit closestValidHit = new RaycastHit();
+        //RaycastHit[] hits = Physics.RaycastAll(footPosition.position, 100f, layers);
+        //foreach (RaycastHit hit in hits)
+        //{
+        //    if (hit.transform.IsChildOf(tranform) && (closestValidHit.collider == null || closestValidHit.distance > hit.distance))
+        //    {
+        //        closestValidHit = hit;
+        //    }
+        //}
+
+        return Physics.Raycast(footPosition.position, -Vector3.up, 0.5f, ~mask);
+    }
+
+    void Start()
+    {
+        mask = (1 << playerLayer);
+    }
+
     void Update()
     {
-        // groundedPlayer = controller.isGrounded;
-        // if (groundedPlayer && playerVelocity.y < 0)
-        // {
-        //     playerVelocity.y = 0f;
-        // }
-
-        playerMovementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        Vector3 moveVector = transform.TransformDirection(playerMovementInput) * Time.deltaTime * playerSpeed;
-        playerBody.velocity = new Vector3(moveVector.x, playerBody.velocity.y, moveVector.z);
+        isGrounded = OnGround();
+        MovePlayer();
 
 
-        if (playerMovementInput.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            playerBody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+            playerBody.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
         }
-        //controller.Move(move * Time.deltaTime * playerSpeed);
-
-        // if (move != Vector3.zero)
-        // {
-        //     gameObject.transform.forward = move;
-        // }
-
-        // // Changes the height position of the player..
-        // if (Input.GetButtonDown("Jump") && groundedPlayer)
-        // {
-        //     playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        // }
-
-        // playerVelocity.y += gravityValue * Time.deltaTime;
-        // controller.Move(playerVelocity * Time.deltaTime);
     }
 
     void MovePlayer()
     {
+        playerMovementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+        Vector3 moveVector = transform.TransformDirection(playerMovementInput) * Time.deltaTime * playerSpeed;
+
+        playerBody.velocity = new Vector3(moveVector.x, playerBody.velocity.y, moveVector.z);
 
     }
 }
