@@ -8,8 +8,6 @@ public class CameraFollow : MonoBehaviour
 
     public Vector3 positionOffset;
 
-    float smoothingSpeed = 50.0f;
-
     public
 
     // Start is called before the first frame update
@@ -18,10 +16,11 @@ public class CameraFollow : MonoBehaviour
 
     }
 
+
     private void LateUpdate()
     {
         Vector3 finalPos = followPoint.position + positionOffset;
-        Vector3 smoothedOutPos = Vector3.Lerp(transform.position, finalPos, smoothingSpeed);
+        Vector3 smoothedOutPos = Vector3.Lerp(transform.position, finalPos, smoothingFactor);
         transform.position = smoothedOutPos;
 
         transform.LookAt(followPoint.position);

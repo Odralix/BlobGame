@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class Playermovement : MonoBehaviour
 {
-    private bool groundedPlayer;
 
     [SerializeField]
-    private float playerSpeed = 500.0f;
+    private float playerSpeed = 1000.0f;
 
     [SerializeField]
     private float jumpForce = 1.5f;
@@ -23,9 +22,16 @@ public class Playermovement : MonoBehaviour
     [SerializeField]
     bool isGrounded;
 
+    [SerializeField]
+    int timesJumped = 0;
+
+    //[SerializeField]
+    //float MaxUpwardsForce = ;
+
     LayerMask mask;
 
     int playerLayer = 8;
+    int pickupableLayer = 9;
 
     bool OnGround()
     {
@@ -45,6 +51,7 @@ public class Playermovement : MonoBehaviour
     void Start()
     {
         mask = (1 << playerLayer);
+        mask |= (1 << pickupableLayer);
     }
 
     void Update()

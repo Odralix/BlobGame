@@ -21,7 +21,10 @@ public class PickupScript : MonoBehaviour
 
     GameObject heldObject = null;
 
-    private float pseudoPodOffset = 0f;
+    //[SerializeField]
+    //private Material OutlineMaterial;
+
+    //private float pseudoPodOffset = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -47,18 +50,29 @@ public class PickupScript : MonoBehaviour
                 var obj = GetClosestObject(_validObjects, transform.position);
                 PickupObject(obj);
             }
+            else if (isHolding)
+            {
+                DropObject();
+            }
         }
 
-        if (Input.GetKeyUp(KeyCode.E) && isHolding == true)
-        {
-            DropObject();
-        }
+        //if (Input.GetKeyUp(KeyCode.E) && isHolding == true)
+        //{
+        //    DropObject();
+        //}
     }
 
     void PickupObject(GameObject pickupObj)
     {
         pickupObj.GetComponent<Rigidbody>().isKinematic = true;
         pickupObj.GetComponent<Collider>().isTrigger = true;
+
+        //Material[] newMatsArr = new Material[2];
+        //var renderer = pickupObj.GetComponent<Renderer>();
+        //var mats = renderer.materials;
+        //newMatsArr[0] = mats[0];
+        //newMatsArr[1] = OutlineMaterial;
+        //renderer.materials = newMatsArr;
 
         var closestGrabber = GetClosestObject(GrabberColliders, pickupObj.transform.position);
 
@@ -79,6 +93,12 @@ public class PickupScript : MonoBehaviour
 
     void DropObject()
     {
+        //Material[] newMatsArr = new Material[1];
+        //var renderer = heldObject.GetComponent<Renderer>();
+        //var mats = renderer.materials;
+        //newMatsArr[0] = mats[0];
+        //renderer.materials = newMatsArr;
+
         heldObject.GetComponent<Collider>().isTrigger = false;
         heldObject.transform.parent = null;
         heldObject.GetComponent<Rigidbody>().isKinematic = false;
