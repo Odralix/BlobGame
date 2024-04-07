@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TagCollection : MonoBehaviour
+public static class TagCollection
 {
-    Dictionary<string, Color> TagDict = new Dictionary<string, Color>()
+    static Dictionary<TagsEnum, Color> TagDict = new Dictionary<TagsEnum, Color>()
     {
-        {"Helpful", Color.green},
-        {"Playful", Color.yellow},
+        {TagsEnum.Helpful, Color.green},
+        {TagsEnum.Violent, Color.red},
+        {TagsEnum.Studious, Color.blue},
     };
 
 }

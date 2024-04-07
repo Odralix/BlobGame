@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PickupScript : MonoBehaviour
 {
@@ -24,6 +25,11 @@ public class PickupScript : MonoBehaviour
     [SerializeField]
     private Material OutlineMaterial;
 
+    [SerializeField]
+    UIDocument uiHover;
+
+    private Label infoText;
+
     //private float pseudoPodOffset = 0f;
 
     // Start is called before the first frame update
@@ -33,6 +39,8 @@ public class PickupScript : MonoBehaviour
         {
             GrabberColliders.Add(collider);
         }
+        infoText = (Label)uiHover.rootVisualElement.Q("Info");
+        //uiHover.visualTreeAsset.stylesheets;
     }
 
     // Update is called once per frame
@@ -40,6 +48,7 @@ public class PickupScript : MonoBehaviour
     {
         if (_validObjects.Count > 0)
         {
+            infoText.text = "E to Pickup";
             //Show pickup button?
         }
 
@@ -133,6 +142,16 @@ public class PickupScript : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(pickupTag))
+        {
             _validObjects.Remove(other);
+            if (_validObjects.Count <= 0)
+            {
+                infoText.text = "";
+                //var testTree = uiHover.visualTreeAsset;
+
+                //infoText.Clear();
+            }
+
+        }
     }
 }
