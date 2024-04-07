@@ -1,0 +1,7 @@
+.selectorTest {
+    background-color: yellow;
+}
+
+.unity-progress-bar__progress {
+    background-color: rgba(229, 116, 43, 0.99);
+}

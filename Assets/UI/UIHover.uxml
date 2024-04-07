@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/selectorTest.uss?fileID=7433441132597879392&amp;guid=7aaf95f1ebf765248a2d19d3b84363c5&amp;type=3#selectorTest" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Info" style="-unity-text-align: upper-center; color: rgb(72, 23, 116); font-size: 42px; white-space: normal;" />
+            <ui:ProgressBar value="22" class="selectorTest" style="background-color: rgba(255, 255, 0, 0.62); display: none;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
