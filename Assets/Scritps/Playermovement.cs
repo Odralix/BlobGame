@@ -54,15 +54,25 @@ public class Playermovement : MonoBehaviour
         mask |= (1 << pickupableLayer);
     }
 
+    [SerializeField]
+    float jumpCooldown = 0;
+
     void Update()
     {
         isGrounded = OnGround();
         MovePlayer();
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (jumpCooldown > 0)
+        {
+            jumpCooldown -= Time.deltaTime;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && jumpCooldown <= 0f)
         {
             playerBody.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
+            jumpCooldown = 1;
         }
     }
 
