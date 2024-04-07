@@ -29,6 +29,7 @@ public class PickupScript : MonoBehaviour
     UIDocument uiHover;
 
     private Label infoText;
+    bool textClearable = true;
 
     //private float pseudoPodOffset = 0f;
 
@@ -46,7 +47,7 @@ public class PickupScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_validObjects.Count > 0)
+        if (_validObjects.Count > 0 && infoText.text == "")
         {
             infoText.text = "E to Pickup";
             //Show pickup button?
@@ -85,6 +86,11 @@ public class PickupScript : MonoBehaviour
 
         var closestGrabber = GetClosestObject(GrabberColliders, pickupObj.transform.position);
 
+        var tagScript = pickupObj.GetComponent<TagBase>();
+
+        textClearable = false;
+        infoText.text = tagScript.tagText;
+        infoText.style.color = TagCollection.TagDict[tagScript.objectTag];
         //var yPos = closestGrabber.transform.position.y
         //closestGrabber.transform.position = (closestGrabber.transform.position - pickupObj.transform.position) * 0.05f;
 
@@ -113,6 +119,7 @@ public class PickupScript : MonoBehaviour
         heldObject.GetComponent<Rigidbody>().isKinematic = false;
         heldObject = null;
         isHolding = false;
+        textClearable = true;
     }
 
     GameObject GetClosestObject(HashSet<Collider> set, Vector3 fromPosition)
@@ -144,7 +151,7 @@ public class PickupScript : MonoBehaviour
         if (other.CompareTag(pickupTag))
         {
             _validObjects.Remove(other);
-            if (_validObjects.Count <= 0)
+            if (_validObjects.Count <= 0 && textClearable)
             {
                 infoText.text = "";
                 //var testTree = uiHover.visualTreeAsset;

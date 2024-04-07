@@ -1,67 +1,66 @@
 using UnityEngine;
 
-public class PlayfulTag : MonoBehaviour
+public class PlayfulTag : TagBase
 {
-    bool isUnused = true;
+    string _tagText = "Playing";
+    public override string tagText { get { return _tagText; } }
 
-    [SerializeField]
-    bool isInteracting;
+    public override TagsEnum objectTag { get { return TagsEnum.Playful; } }
 
-    [SerializeField]
-    float targetTime = 10;
-
-    [SerializeField]
-    string testName = "NotYet";
-    [SerializeField]
-    int tagCount = 0;
-
-    // Start is called before the first frame update
-    void Start()
+    public override void ProgressTag()
     {
+        targetTime -= Time.deltaTime;
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (isUnused)
+        if (targetTime <= 0.0f)
         {
-            if (isInteracting)
-            {
-                targetTime -= Time.deltaTime;
-
-                if (targetTime <= 0.0f)
-                {
-                    AquireTag();
-                }
-            }
+            AquireTag();
+            _tagText = "All played out";
         }
     }
 
-    void AquireTag()
-    {
-        isUnused = false;
-        tagCount++;
-        testName = "Playful";
-    }
+    //bool isUnused = true;
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            isInteracting = true;
-        }
-    }
+    //[SerializeField]
+    //bool isInteracting;
 
-    //private void OnCollisionExit(Collision other)
+    //[SerializeField]
+    //float targetTime = 10;
+
+    //[SerializeField]
+    //PlayerTagsAndCount playerCounter;
+
+    //TagsEnum playerTag = TagsEnum.Playful;
+
+    //// Start is called before the first frame update
+    //void Start()
     //{
-    //    if (other.gameObject.tag == "Player")
+
+    //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    if (isUnused)
     //    {
-    //        isInteracting = false;
+    //        if (isInteracting)
+    //        {
+    //            targetTime -= Time.deltaTime;
+
+    //            if (targetTime <= 0.0f)
+    //            {
+    //                AquireTag();
+    //            }
+    //        }
     //    }
     //}
 
-    //void OnCollisionEnter(Collision other)
+    //void AquireTag()
+    //{
+    //    isUnused = false;
+    //    playerCounter.AddTag(playerTag);
+    //}
+
+    //void OnTriggerEnter(Collider other)
     //{
     //    if (other.gameObject.tag == "Player")
     //    {
@@ -69,11 +68,27 @@ public class PlayfulTag : MonoBehaviour
     //    }
     //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            isInteracting = false;
-        }
-    }
+    ////private void OnCollisionExit(Collision other)
+    ////{
+    ////    if (other.gameObject.tag == "Player")
+    ////    {
+    ////        isInteracting = false;
+    ////    }
+    ////}
+
+    ////void OnCollisionEnter(Collision other)
+    ////{
+    ////    if (other.gameObject.tag == "Player")
+    ////    {
+    ////        isInteracting = true;
+    ////    }
+    ////}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.tag == "Player")
+    //    {
+    //        isInteracting = false;
+    //    }
+    //}
 }
